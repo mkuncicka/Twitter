@@ -106,22 +106,23 @@ class User
         $email = $conn->real_escape_string($email);
         $query = "SELECT * FROM users WHERE email='$email'";
         $result = $conn->query($query);
-        if (true === $result) {
+        if (true == $result) {
             if (1 == $result->num_rows) {
                 $row = $result->fetch_assoc();
+                if (password_verify($password, $row['hashed_password'])) {
+                    $user = new User(
+                        $row['id'],
+                        $row['email'],
+                        $row['hashed_password'],
+                        $row['description'],
+                        $row['is_active']
+                    );
+
+                    return $user;
+                }
             } else {
                 return false;
             }
-
-            $user = new User(
-                $row['id'],
-                $row['email'],
-                $row['hashed_password'],
-                $row['descriprion'],
-                $row['is_active']
-            );
-
-                return $user;
         }
     }
 

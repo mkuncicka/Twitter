@@ -1,9 +1,23 @@
 <?php
 require_once 'src/functions.php';
+require_once 'src/User.php';
 
+$conn = connectToDataBase();
 if ($_SERVER['REQUEST_METHOD']==='POST') {
-    if (isset($_POST['mail']) and isset($_POST['password'])) {
-        
+    if (isset($_POST['email']) and isset($_POST['password'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $loggedUser = User::logIn($conn, $email, $password);
+        if ($loggedUser) {
+            session_start();
+            $_SESSION['user_id'] = $loggedUser->getId();
+            echo $_SESSION['user_id'];
+            redirect('index.php');
+        } else {
+            echo "Błędny e-mail lub hasło.<br>";
+        }
+    } else {
+        echo "Błędny e-mail lub hasło.<br>";
     }
 }
 ?>
@@ -16,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
     <form method="post">
         <p>
         <label for="mail">e-mail</label>
-            <input type="email" name="mail" placeholder="Wpisz e-mail">
+            <input type="email" name="email" placeholder="Wpisz e-mail">
         </p>
         <p>
         <label for="password">hasło</label>
@@ -24,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
         </p>
         <p>
             <button type="submit" name="login">Zaloguj</button>
+        </p>
+        <p>
+            <a href="registration.php">Nie masz konta? Zarejestruj się!</a>
         </p>
     </form>
 </body>

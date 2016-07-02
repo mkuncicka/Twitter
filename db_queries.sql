@@ -22,11 +22,19 @@ CREATE TABLE comments (
   content VARCHAR(60),
   tweet_id INT,
   PRIMARY KEY (id),
-  FOREIGN KEY (tweet_id) REFERENCES tweets()
+  FOREIGN KEY (tweet_id) REFERENCES tweets(id)
 );
 
 CREATE TABLE messages (
   id INT NOT NULL AUTO_INCREMENT,
   content TEXT,
-  user_id 
+  sender_id INT NOT NULL,
+  addresser_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (sender_id) REFERENCES users(id),
+  FOREIGN KEY (addresser_id) REFERENCES users(id)
 );
+
+INSERT INTO `users` (`email`, `hashed_password`, `description`, `is_active`) VALUES ($email, $password, $description, $isActive)
+
+SELECT * FROM users WHERE email='ala@test.pl';
