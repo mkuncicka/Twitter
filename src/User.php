@@ -9,7 +9,7 @@ class User
     private $isActive;
 
     
-    public function __construct($id = -1, $email = "", $hashedPassword = "", $description = "", $isActive = false)
+    public function __construct($email = "", $hashedPassword = "", $description = "", $isActive = false, $id = -1)
     {
         $this->id = $id;
         $this->email = $email;
@@ -76,11 +76,11 @@ class User
     public function save(mysqli $conn)
     {
         if (-1 === $this->id) {
-            $query = "INSERT INTO users (email, hashedPassword, description, is_active)"
-                . "VALUES ('{$this->email}', '{$this->hashedPassword}', '{$this->description}', '{$this->isActive}',)";
+            $query = "INSERT INTO users (email, hashed_password, description, is_active)"
+                . "VALUES ('{$this->email}', '{$this->hashedPassword}', '{$this->description}', '{$this->isActive}')";
             $result = $conn->query($query);
             
-            if(true === $result) {
+            if(true == $result) {
                 $this->id = $conn->insert_id;
                 
                 return true;
@@ -90,7 +90,7 @@ class User
         } else {
             $query = "UPDATE users SET "
                 . "email = {$this->email}"
-                . "hashedPassword = {$this->hashedPassword}"
+                . "hashed_password = {$this->hashedPassword}"
                 . "description = {$this->description}"
                 . "is_active = {$this->isActive}"
                 . "WHERE id={$this->id}";
@@ -111,11 +111,11 @@ class User
                 $row = $result->fetch_assoc();
                 if (password_verify($password, $row['hashed_password'])) {
                     $user = new User(
-                        $row['id'],
                         $row['email'],
                         $row['hashed_password'],
                         $row['description'],
-                        $row['is_active']
+                        $row['is_active'],
+                        $row['id']
                     );
 
                     return $user;
@@ -140,11 +140,11 @@ class User
         
         foreach ($result as $user) {
             $userObj = new User(
-                $user['id'],
                 $user['email'],
                 $user['hashed_password'],
                 $user['descriprion'],
-                $user['is_active']
+                $user['is_active'],
+                $user['id']
             );
             
             $users[] = $userObj;
@@ -172,11 +172,11 @@ class User
         }
         
         $user = new User(
-            $row['id'],
             $row['email'],
             $row['hashed_password'],
             $row['descriprion'],
-            $row['is_active']
+            $row['is_active'],
+            $row['id']
             );
         
         return $user;

@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
         if ($loggedUser) {
             session_start();
             $_SESSION['user_id'] = $loggedUser->getId();
-            echo $_SESSION['user_id'];
             redirect('index.php');
         } else {
             echo "Błędny e-mail lub hasło.<br>";

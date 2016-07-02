@@ -1,15 +1,17 @@
 <?php
 require_once 'src/functions.php';
+require_once 'src/User.php';
+
 $conn = connectToDataBase();
 if ($_SERVER['REQUEST_METHOD']==='POST') {
     if (isset($_POST['email']) and isset($_POST['password'])) {
+        $id = -1;
         $email = $conn->real_escape_string($_POST['email']);
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $description = $conn->real_escape_string($_POST['description']);
         $isActive = true;
-        $query = "INSERT INTO `users` (`email`, `hashed_password`, `description`, `is_active`)"
-            . "VALUES ('$email', '$password', '$description', '$isActive')";
-        $conn->query($query);
+        $user = new User($email, $password, $description, $isActive);
+        $user->save($conn);
         redirect('login.php');
     }
 }
