@@ -40,7 +40,7 @@ CREATE TABLE messages (
   FOREIGN KEY (sender_id) REFERENCES users(id),
   FOREIGN KEY (addresser_id) REFERENCES users(id)
 );
-
+ALTER TABLE messages ADD creation_date DATETIME;
 INSERT INTO `users` (`email`, `hashed_password`, `description`, `is_active`) VALUES ($email, $password, $description, $isActive);
 
 SELECT * FROM users WHERE email='ala@test.pl';

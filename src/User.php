@@ -134,7 +134,7 @@ class User
 
     public function getAllMessages($conn)
     {
-        $query = "SELECT * FROM messages WHERE sender_id='{$this->id}' or addresser_id='{$this->id}' ORDER BY creation_date DESC";
+        $query = "SELECT * FROM messages WHERE sender_id='{$this->id}'  or addresser_id='{$this->id}' ORDER BY creation_date DESC";
 
         $result = $conn->query($query);
 
@@ -148,7 +148,7 @@ class User
             foreach ($result as $message) {
                 $messageObj = new Message(
                     $message['sender_id'],
-                    $message['addreser_id'],
+                    $message['addresser_id'],
                     $message['content'],
                     $message['creation_date'],
                     $message['if_read'],
@@ -206,7 +206,7 @@ class User
             $userObj = new User(
                 $user['email'],
                 $user['hashed_password'],
-                $user['descriprion'],
+                $user['description'],
                 $user['is_active'],
                 $user['id']
             );

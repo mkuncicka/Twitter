@@ -3,7 +3,7 @@
 class Message
 {
     private $id;
-    private $senderID;
+    private $senderId;
     private $addresserId;
     private $text;
     private $ifRead;
@@ -13,7 +13,7 @@ class Message
     public function __construct($senderId = -1, $addresserId = -1, $text = "", $creationDate = '', $ifRead = 1, $id = -1)
     {
         $this->id = $id;
-        $this->senderI = $senderId;
+        $this->senderId = $senderId;
         $this->addresserId = $addresserId;
         $this->text = $text;
         $this->creationDate = $creationDate;
@@ -25,9 +25,9 @@ class Message
         return $this->id;
     }
     
-    public function getSenderID()
+    public function getSenderId()
     {
-        return $this->senderID;
+        return $this->senderId;
     }
 
     public function getAddresserId()
@@ -47,8 +47,17 @@ class Message
     
     public function getIfRead()
     {
-        return $this->ifRead;
+        if ($this->ifRead = 0) {
+            $read = 'Przeczytana';
+        } elseif ($this->ifRead = 1) {
+            $read = 'Nieprzeczytana';
+        } else {
+            $read = 'invalid state';
+        }
+        
+        return $read;
     }
+
     
     public function setIfRead($ifRead)
     {
@@ -63,8 +72,9 @@ class Message
     public function save(mysqli $conn)
     {
         if (-1 === $this->id) {
-            $query = "INSERT INTO messages (sender_id, addreser_id, content, creation_date, if_read)"
-                . "VALUES ('{$this->senderId}', '{$this->addresserId}', '{$this->text}', '{$this->creationDate}', {$this->ifRead})";
+            $query = "INSERT INTO messages (sender_id, addresser_id, content, creation_date, if_read)"
+                . "VALUES ('{$this->senderId}', '{$this->addresserId}', '{$this->text}', "
+                . "'{$this->creationDate}', '{$this->ifRead}')";
             $result = $conn->query($query);
 
             if(true == $result) {
@@ -75,7 +85,7 @@ class Message
                 return false;
             }
         } else {
-            $query = "UPDATE messeges SET "
+            $query = "UPDATE messages SET "
                 . "content = {$this->text}"
                 . "creation_date = {$this->creationDate}"
                 . "if_read = {$this->ifRead}"

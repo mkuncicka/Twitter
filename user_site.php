@@ -56,6 +56,12 @@ $loggedUser = User::getUser($conn, $user_id);
 
     ?>
 </div>
-
+<div>
+    <p>
+    <form action="message_site.php">
+        <button type="submit" name="messages">Zobacz wiadomości</button>
+    </form>
+    </p>
+</div>
 </body>
 </html>
