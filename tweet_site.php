@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_comment'])) {
 <div>
     <h3>To jest pojedynczy tweet</h3>
     <?php
-    echo "<p>Id użytkownika: " . $tweet->getUserId() . "<br>";
+    echo "<p>Tweet użytkownika: " . User::getUser($conn, $tweet->getUserId())->getEmail() . "<br>";
     echo "Id tweeta: " . $tweet->getId() . "<br>";
     echo "Data utworzenia: " . $tweet->getCreationDate() . "<br>";
     echo "Treść tweeta:<br>";
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_comment'])) {
     $allComments = $tweet->getAllComments($conn);
     if ($allComments) {
         foreach ($allComments as $comment) {
-            echo "<p>Id użytkownika który dodał komentarz: " . $comment->getUserId() . "<br>";
+            echo "<p>Komentarz dodał: " . User::getUser($conn, $comment->getUserId())->getEmail() . "<br>";
             echo "Id komentarza: " . $comment->getId() . "<br>";
             echo "Data utworzenia: " . $comment->getCreationDate() . "<br>";
             echo "Treść komentarza:<br>";

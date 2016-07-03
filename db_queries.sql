@@ -35,6 +35,7 @@ CREATE TABLE messages (
   content TEXT,
   sender_id INT NOT NULL,
   addresser_id INT NOT NULL,
+  if_read INT,
   PRIMARY KEY (id),
   FOREIGN KEY (sender_id) REFERENCES users(id),
   FOREIGN KEY (addresser_id) REFERENCES users(id)
