@@ -101,6 +101,37 @@ class User
         }
     }
 
+    public function getAllTweets($conn)
+    {
+        $query = "SELECT * FROM tweets WHERE user_id='{$this->id}' ORDER BY creation_date DESC";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            die('Error: ' .$conn->error);
+        }
+
+        $tweets = [];
+
+        if (0 < $result->num_rows) {
+            foreach ($result as $tweet) {
+                $tweetObj = new Tweet(
+                    $tweet['user_id'],
+                    $tweet['content'],
+                    $tweet['creation_date'],
+                    $tweet['id']
+                );
+
+                $tweets[] = $tweetObj;
+            }
+
+            return $tweets;
+        } else {
+            return false;
+        }
+        
+    }
+
     public static function logIn(mysqli $conn, $email, $password)
     {
         $email = $conn->real_escape_string($email);
@@ -157,7 +188,7 @@ class User
     {
         $id = $conn->real_escape_string($id);
         
-        $query = "SELECT * FROM users WHERE id = $id";
+        $query = "SELECT * FROM users WHERE id = '$id'";
         
         $result = $conn->query($query);
         
@@ -174,7 +205,7 @@ class User
         $user = new User(
             $row['email'],
             $row['hashed_password'],
-            $row['descriprion'],
+            $row['description'],
             $row['is_active'],
             $row['id']
             );

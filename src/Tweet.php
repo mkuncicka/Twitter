@@ -5,12 +5,14 @@ class Tweet
     private $id;
     private $user_id;
     private $text;
+    private $creationDate;
 
-    public function __construct($user_id = "", $text = "", $id = -1)
+    public function __construct($user_id = 0, $text = "", $creationDate = '', $id = -1)
     {
         $this->id = $id;
         $this->user_id = $user_id;
         $this->text = $text;
+        $this->creationDate = $creationDate;
     }
 
     public function getId()
@@ -33,21 +35,22 @@ class Tweet
         $this->text = $text;
     }
 
-    public function getTweet()
+    public function getCreationDate()
     {
-
+        return $this->creationDate;
     }
 
-    public function create()
-    {
 
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
     }
 
     public function save(mysqli $conn)
     {
         if (-1 === $this->id) {
-            $query = "INSERT INTO tweets (user_id, content)"
-                . "VALUES ('{$this->user_id}', '{$this->text}')";
+            $query = "INSERT INTO tweets (user_id, content, creation_date)"
+                . "VALUES ('{$this->user_id}', '{$this->text}', '{$this->creationDate}')";
             $result = $conn->query($query);
 
             if(true == $result) {
@@ -60,6 +63,7 @@ class Tweet
         } else {
             $query = "UPDATE tweets SET "
                 . "content = {$this->text}"
+                . "creation_date = {$this->creationDate}"
                 . "WHERE id={$this->id}";
 
             $result = $conn->query($query);
@@ -68,19 +72,9 @@ class Tweet
         }
     }
 
-    public function show()
+    public function getAllComments($conn)
     {
-
-    }
-
-    public function getAllComments()
-    {
-
-    }
-
-    public static function getUserTweets($conn, $user_id)
-    {
-        $query = "SELECT * FROM tweets WHERE user_id='$user_id'";
+        $query = "SELECT * FROM comments WHERE tweet_id='{$this->id}' ORDER BY creation_date DESC";
 
         $result = $conn->query($query);
 
@@ -88,18 +82,53 @@ class Tweet
             die('Error: ' .$conn->error);
         }
 
-        $tweets = [];
+        $comments = [];
+        
+        if (0 < $result->num_rows) {
+            foreach ($result as $comment) {
+                $commentObj = new Comment(
+                    $comment['user_id'],
+                    $comment['tweet_id'],
+                    $comment['creation_date'],
+                    $comment['content'],
+                    $comment['id']
+                );
 
-        foreach ($result as $tweet) {
-            $tweetObj = new Tweet(
-                $tweet['user_id'],
-                $tweet['content'],
-                $tweet['id']
-            );
+                $comments[] = $commentObj;
+            }
 
-            $tweets[] = $tweetObj;
+            return $comments;
+        } else {
+            return false;
+        }
+        
+    }
+
+    public static function getTweet($conn, $tweet_id)
+    {
+        $tweet_id = $conn->real_escape_string($tweet_id);
+
+        $query = "SELECT * FROM tweets WHERE id = '$tweet_id'";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            die('Error: ' . $conn->error);
         }
 
-        return $tweets;
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+        } else {
+            return null;
+        }
+
+        $tweet = new Tweet(
+            $row['user_id'],
+            $row['content'],
+            $row['creation_date'],
+            $row['id']
+        );
+
+        return $tweet;
     }
 }

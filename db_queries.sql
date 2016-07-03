@@ -17,11 +17,16 @@ CREATE TABLE tweets (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+ALTER TABLE tweets ADD creation_date DATETIME;
+
 CREATE TABLE comments (
   id INT NOT NULL AUTO_INCREMENT,
   content VARCHAR(60),
-  tweet_id INT,
+  user_id INT NOT NULL,
+  tweet_id INT NOT NULL,
+  creation_date DATETIME,
   PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (tweet_id) REFERENCES tweets(id)
 );
 
@@ -35,6 +40,6 @@ CREATE TABLE messages (
   FOREIGN KEY (addresser_id) REFERENCES users(id)
 );
 
-INSERT INTO `users` (`email`, `hashed_password`, `description`, `is_active`) VALUES ($email, $password, $description, $isActive)
+INSERT INTO `users` (`email`, `hashed_password`, `description`, `is_active`) VALUES ($email, $password, $description, $isActive);
 
 SELECT * FROM users WHERE email='ala@test.pl';
