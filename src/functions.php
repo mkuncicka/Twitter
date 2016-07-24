@@ -1,8 +1,6 @@
 <?php
-const DB_HOST = 'localhost';
-const DB_USER = 'root';
-const DB_PASSWORD = 'coderslab';
-const DB_NAME = 'twitter';
+
+require_once "../config.php";
 
 function connectToDataBase() {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);

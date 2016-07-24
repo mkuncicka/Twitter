@@ -1,2 +1,2 @@
-# warsztaty2
-My first web application
+# Twitter
+My first web application similar to Twitter
