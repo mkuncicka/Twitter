@@ -89,14 +89,14 @@ class User
             }
         } else {
             $query = "UPDATE users SET "
-                . "email = {$this->email}"
-                . "hashed_password = {$this->hashedPassword}"
-                . "description = {$this->description}"
-                . "is_active = {$this->isActive}"
-                . "WHERE id={$this->id}";
-            
+                . "email='" . $this->getEmail()
+                . "', hashed_password='" . $this->getHashedPassword()
+                . "', description='" . $this->getDescription()
+                . "', is_active='" . $this->isUserActive()
+                . "' WHERE id='" . $this->getId() . "'";
+
             $result = $conn->query($query);
-            
+
             return $result;
         }
     }

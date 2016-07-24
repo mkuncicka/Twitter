@@ -28,14 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_tweet'])) {
 <html>
 <head>
     <title>Strona główna</title>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 <div>
     <p>
         Zalogowano jako: <a href="user_site.php"><?php echo $loggedUser->getEmail();?></a>
-        <form method="post">
-            <button type="submit" name="logout">Wyloguj</button>
-        </form>
+    <form method="post">
+        <button type="submit" name="logout">Wyloguj</button>
+    </form>
     </p>
 </div>
 <div class="container">
@@ -50,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_tweet'])) {
             <label>Dodaj tweeta:<br>
                 <textarea name="new_tweet"></textarea>
             </label>
-            <p>
-                <button type="submit" name="add_tweet">Dodaj</button>
-            </p>
-        </form>
-        
+    <p>
+        <button type="submit" name="add_tweet">Dodaj</button>
+    </p>
+    </form>
+
     </p>
 </div>
 <div>
@@ -74,3 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_tweet'])) {
 
 </body>
 </html>
+
+
+
+

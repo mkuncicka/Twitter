@@ -1,0 +1,30 @@
+div {
+    margin: 20px;
+}
+
+.message {
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+}
+
+.tweet {
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+}
+
+.box {
+    padding: 10px;
+    background-color: lightskyblue;
+}
+
+.text {
+    padding-top: 8px;
+    padding-left: 20px;
+    font-size: 18px;
+}
+
+textarea {
+    display: block;
+}

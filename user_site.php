@@ -20,11 +20,13 @@ $loggedUser = User::getUser($conn, $user_id);
 <html>
 <head>
     <title>Strona użytkownika</title>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 <div>
     <p>
-        <?php echo "Zalogowano jako: " . $loggedUser->getEmail();?>
+        <?php echo "Zalogowano jako: <a href=\"user_site.php\">" . $loggedUser->getEmail() . "</a>";?>
     <form method="post">
         <button type="submit" name="logout">Wyloguj</button>
     </form>
@@ -33,13 +35,16 @@ $loggedUser = User::getUser($conn, $user_id);
 <div class="container">
 
     <p>
-        To jest strona użytkownika <?php echo $loggedUser->getEmail();?>.
+        To jest strona użytkownika <a href="user_site.php"><?php echo $loggedUser->getEmail();?></a>.
     </p>
 </div>
 <div>
     <p>
         Informacje:<br>
         <?php echo $loggedUser->getDescription();?>
+        <form action="edit_user.php">
+        <button type="submit">Edytuj informacje</button>
+        </form>
     </p>
 </div>
 <div>

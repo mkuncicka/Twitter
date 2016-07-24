@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 <html>
 <head>
     <title>Strona logowania</title>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
     <form method="post">

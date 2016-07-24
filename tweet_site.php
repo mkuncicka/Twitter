@@ -34,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_comment'])) {
 <html>
 <head>
     <title>Strona tweeta</title>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 <div>
@@ -48,11 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_comment'])) {
 <div>
     <h3>To jest pojedynczy tweet</h3>
     <?php
-    echo "<p>Tweet użytkownika: " . User::getUser($conn, $tweet->getUserId())->getEmail() . "<br>";
-    echo "Id tweeta: " . $tweet->getId() . "<br>";
-    echo "Data utworzenia: " . $tweet->getCreationDate() . "<br>";
-    echo "Treść tweeta:<br>";
-    echo $tweet->getText() . "</p>";
+    echo "<div class='box'><p class='tweet'>Tweet użytkownika: " . User::getUser($conn, $tweet->getUserId())->getEmail() . "</p>";
+    echo "<p class='tweet'>Id tweeta: " . $tweet->getId() . "</p>";
+    echo "<p class='tweet'>Data utworzenia: " . $tweet->getCreationDate() . "</p>";
+    echo "<p class='tweet'>Treść tweeta:</p>";
+    echo "<p class='tweet text'>" . $tweet->getText() . "</p>";
     ?>
 </div>
 <div>
@@ -61,14 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_comment'])) {
     $allComments = $tweet->getAllComments($conn);
     if ($allComments) {
         foreach ($allComments as $comment) {
-            echo "<p>Komentarz dodał: " . User::getUser($conn, $comment->getUserId())->getEmail() . "<br>";
-            echo "Id komentarza: " . $comment->getId() . "<br>";
-            echo "Data utworzenia: " . $comment->getCreationDate() . "<br>";
-            echo "Treść komentarza:<br>";
-            echo $comment->getText() . "</p>";
+            echo "<div class='box'><p class='comment'>Komentarz dodał: " . User::getUser($conn, $comment->getUserId())->getEmail() . "</p>";
+            echo "<p class='comment'>Id komentarza: " . $comment->getId() . "</p>";
+            echo "<p class='comment'>Data utworzenia: " . $comment->getCreationDate() . "</p>";
+            echo "<p class='comment'>Treść komentarza:</p>";
+            echo "<p class='comment text'>" . $comment->getText() . "</p></div>";
         }
     } else {
-        echo "Ten tweet nie ma jeszcze komentarzy";
+        echo "<div class='box'><p class='comment'>Ten tweet nie ma jeszcze komentarzy</p></div>";
     }
 
 
@@ -77,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['new_comment'])) {
 
 <div><p>
     <form method="post">
-        <label>Dodaj komentarz do tweeta:<br>
+        <label>Dodaj komentarz do tweeta:
             <textarea name="new_comment"></textarea>
         </label>
         <p>

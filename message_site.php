@@ -21,6 +21,8 @@ $loggedUser = User::getUser($conn, $user_id);
 <html>
 <head>
     <title>Strona wiadomości</title>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 <div>
@@ -38,12 +40,12 @@ $loggedUser = User::getUser($conn, $user_id);
     $allMessages = $loggedUser->getAllMessages($conn);
     if ($allMessages) {
         foreach ($allMessages as $message) {
-            echo "<p>Wiadomość od:" . User::getUser($conn, $message->getSenderId())->getEmail() . "<br>";
-            echo "Wiadomość do:" . User::getUser($conn, $message->getAddresserId())->getEmail() . "<br>";
-            echo "Id wiadomości: " . $message->getId() . "<br>";
-            echo "Data utworzenia: " . $message->getCreationDate() . "<br>";
-            echo $message->getIfRead() . "</p>";
-            echo "<p>" . $message->getText() . "</p>";
+            echo "<div class='box'><p class='message'>Od:" . User::getUser($conn, $message->getSenderId())->getEmail() . "</p>";
+            echo "<p class='message'>Do:" . User::getUser($conn, $message->getAddresserId())->getEmail() . "</p>";
+            echo "<p class='message'>Id: " . $message->getId() . "</p>";
+            echo "<p class='message'>Data: " . $message->getCreationDate() . "</p>";
+            echo "<p class='message'>" . $message->getIfRead() . "</p>";
+            echo "<p class='message' class='text'>" . $message->getText() . "</p></div>";
         }
     } else {
         echo "Nie masz wiadomości";
