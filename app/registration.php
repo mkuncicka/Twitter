@@ -1,8 +1,8 @@
 <?php
-require_once 'src/functions.php';
-require_once 'src/User.php';
 
-$conn = connectToDataBase();
+require_once '../src/User.php';
+require_once 'dbConnection.php';
+
 if ($_SERVER['REQUEST_METHOD']==='POST') {
     if (isset($_POST['email']) and isset($_POST['password'])) {
         $id = -1;
@@ -21,9 +21,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 <head>
     <title>Formularz rejestracji</title>
     <meta charset="UTF-8">
-    <link href="style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 <body>
+<div class="container">
+
 <form method="post">
     <p>
         <label for="mail">Podaj email</label>
@@ -38,8 +40,9 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
         <input type="text" name="description" placeholder="Dodaj opis swojej osoby">
     </p>
     <p>
-        <button type="submit" name="register">Zarejestruj</button>
+        <button type="submit" class="btn" name="register">Zarejestruj</button>
     </p>
 </form>
+</div>
 </body>
 </html>

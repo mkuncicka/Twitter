@@ -1,17 +1,16 @@
 <?php
-require_once 'src/functions.php';
-require_once 'src/User.php';
 
-$conn = connectToDataBase();
+require_once '../src/User.php';
+require_once 'dbConnection.php';
+
 if ($_SERVER['REQUEST_METHOD']==='POST') {
     if (isset($_POST['email']) and isset($_POST['password'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
         $loggedUser = User::logIn($conn, $email, $password);
         if ($loggedUser) {
-            session_start();
             $_SESSION['user_id'] = $loggedUser->getId();
-            redirect('index.php');
+            redirect('../index.php');
         } else {
             echo "Błędny e-mail lub hasło.<br>";
         }
@@ -25,9 +24,14 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 <head>
     <title>Strona logowania</title>
     <meta charset="UTF-8">
-    <link href="style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 <body>
+<div class="container">
+<div class="title">
+    <h1>Witaj nieznajomy! Zaloguj się :)</h1>
+</div>
+<div>
     <form method="post">
         <p>
         <label for="mail">e-mail</label>
@@ -38,12 +42,14 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
             <input type="password" name="password" placeholder="Wpisz hasło">
         </p>
         <p>
-            <button type="submit" name="login">Zaloguj</button>
+            <button type="submit" name="login" class="btn">Zaloguj</button>
         </p>
         <p>
             <a href="registration.php">Nie masz konta? Zarejestruj się!</a>
         </p>
     </form>
+</div>
+</div>
 </body>
 </html>
 

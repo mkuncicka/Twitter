@@ -1,18 +1,9 @@
 <?php
 
-require_once 'src/functions.php';
-require_once 'src/User.php';
-require_once 'src/Message.php';
-
-$conn = connectToDataBase();
-session_start();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' and (isset($_POST['logout']))) {
-    unset($_SESSION['user_id']);
-}
+require_once '../src/User.php';
+require_once '../src/Message.php';
+require_once 'dbConnection.php';
 redirectIfNotLoggedIn();
-$user_id = ($_SESSION['user_id']);
-$loggedUser = User::getUser($conn, $user_id);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $text = ($_POST['new_message']);
@@ -20,10 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $addresserId = $_POST['addreser'];
     $message = new Message($user_id, $addresserId, $text, $date);
     $message->save($conn);
-    redirect('message_site.php');
+    redirect('messages_site.php');
 }
 
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
+    redirect('users_list.php');
+}
 ?>
 <html>
 <head>
@@ -32,14 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
-<div>
-    <p>
-        Zalogowano jako: <a href="user_site.php"><?php echo $loggedUser->getEmail();?></a>
+<div class="container">
+
+<div class = "menu">
+    <p>Zalogowano jako: <a href="app/user_site.php"><?php echo $loggedUser->getEmail();?></a></p>
     <form method="post">
-        <button type="submit" name="logout">Wyloguj</button>
+        <ul>
+            <li><button type="submit" name="logout" class="btn">Wyloguj</button></li>
+            <li><button type="submit" name="usersList" class="btn">Lista użytkowników</button></li>
+        </ul>
     </form>
-    </p>
 </div>
+
 <div>
         <form method="post">
             <p>
@@ -65,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>
                 <button type="submit" name="send_message">Wyślij</button>
             </p>
-
         </form>
-
+</div>
+</div>
 </body>
 </html>

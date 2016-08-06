@@ -165,6 +165,19 @@ class User
 
     }
 
+    public function getAllMessagesByUser($conn, $otherUserId)
+    {
+        $allMessages = $this->getAllMessages($conn);
+        $messages = [];
+        foreach ($allMessages as $message) {
+            if ($message->getSenderId() == $otherUserId or $message->getAddresserId() == $otherUserId) {
+                $messages[] = $message;
+            }
+        }
+        return $messages;
+
+    }
+
     public static function logIn(mysqli $conn, $email, $password)
     {
         $email = $conn->real_escape_string($email);

@@ -1,2 +1,4 @@
 /.idea/
-/config.php
+/app/config.php
+backup.sh
+backup.sql
