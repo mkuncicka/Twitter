@@ -16,6 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['new_tweet'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
     redirect('app/users_list.php');
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['main_site'])) {
+    redirect('index.php');
+}
 ?>
 
 <html>
@@ -33,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
         <ul>
         <li><button type="submit" name="logout" class="btn">Wyloguj</button></li>
         <li><button type="submit" name="usersList" class="btn">Lista użytkowników</button></li>
+        <li><button type="submit" name="main_site" class="btn">Strona główna</button></li>
         </ul>
     </form>
 
@@ -55,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
 </div>
 
 <div class="links">
-    <h3>Wszystkie Tweety <?php echo $loggedUser->getEmail();?>:</h3>
+    <h3>Wszystkie Tweety <a href="app/user_site.php"><?php echo $loggedUser->getEmail();?></a>:</h3>
     <?php
     $allTweets = $loggedUser->getAllTweets($conn);
     if ($allTweets) {

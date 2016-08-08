@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 <div class="title">
     <h1>Witaj nieznajomy! Zaloguj się :)</h1>
 </div>
-<div>
+<div class="log">
     <form method="post">
         <p>
         <label for="mail">e-mail</label>

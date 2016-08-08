@@ -25,7 +25,10 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 </head>
 <body>
 <div class="container">
-
+    <div class="title">
+        <h1>Witaj nieznajomy! Zarejestruj się :)</h1>
+    </div>
+    <div class="log">
 <form method="post">
     <p>
         <label for="mail">Podaj email</label>
@@ -42,7 +45,10 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
     <p>
         <button type="submit" class="btn" name="register">Zarejestruj</button>
     </p>
+    <p><a href="login.php">Mam już konto - przejdź do strony logowania</a></p>
+    </div>
 </form>
+
 </div>
 </body>
 </html>

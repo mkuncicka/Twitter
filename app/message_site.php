@@ -12,6 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' and isset($_GET['user'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
     redirect('users_list.php');
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['main_site'])) {
+    redirect('../index.php');
+}
 ?>
 
 <html>
@@ -29,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
             <ul>
                 <li><button type="submit" name="logout" class="btn">Wyloguj</button></li>
                 <li><button type="submit" name="usersList" class="btn">Lista użytkowników</button></li>
+                <li><button type="submit" name="main_site" class="btn">Strona główna</button></li>
             </ul>
         </form>
 
@@ -52,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
                 $header = $otherUser->getEmail();
             }
 
+
             echo "<div class='box " . $direction . "'><p class='message'></p>";
-            echo $header;
-            echo "<p class='message'>Data: " . $message->getCreationDate() . "</p>";
-//            echo "<p class='message'>" . $message->getIfRead() . "</p>";
+            echo "<p class='message data'>" . $message->getCreationDate() . "</p>";
+            echo $header . ":";
             echo "<p class='message text'>" . $message->getText() . "</p></div>";
         }
     } else {

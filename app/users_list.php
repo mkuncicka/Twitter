@@ -10,11 +10,15 @@ redirectIfNotLoggedIn();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
     redirect('users_list.php');
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['main_site'])) {
+    redirect('../index.php');
+}
 ?>
 
 <html>
 <head>
-    <title>Strona wiadomości</title>
+    <title>Użytkownicy</title>
     <meta charset="UTF-8">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -27,13 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
             <ul>
                 <li><button type="submit" name="logout" class="btn">Wyloguj</button></li>
                 <li><button type="submit" name="usersList" class="btn">Lista użytkowników</button></li>
+                <li><button type="submit" name="main_site" class="btn">Strona główna</button></li>
             </ul>
         </form>
 
     </div>
 
 <div>
-    <h3>Uzytkownicy</h3>
+    <h3>Użytkownicy</h3>
+    <div class="users_list">
     <?php
     $allUsers = User::getAllUsers($conn);
 
@@ -44,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
     }
 
     ?>
+    </div>
 </div>
 </div>
 </body>

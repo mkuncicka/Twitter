@@ -22,6 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['new_comment'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
     redirect('users_list.php');
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['main_site'])) {
+    redirect('../index.php');
+}
 ?>
 
 <html>
@@ -39,35 +43,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
             <ul>
                 <li><button type="submit" name="logout" class="btn">Wyloguj</button></li>
                 <li><button type="submit" name="usersList" class="btn">Lista użytkowników</button></li>
+                <li><button type="submit" name="main_site" class="btn">Strona główna</button></li>
             </ul>
         </form>
 
     </div>
 
-<div>
-    <h3>To jest pojedynczy tweet</h3>
+<div class='box tweet_box'>
     <?php
-    echo "<div class='box'><p class='tweet'>Tweet użytkownika: " . User::getUser($conn, $tweet->getUserId())->getEmail() . "</p>";
-    echo "<p class='tweet'>Id tweeta: " . $tweet->getId() . "</p>";
-    echo "<p class='tweet'>Data utworzenia: " . $tweet->getCreationDate() . "</p>";
-    echo "<p class='tweet'>Treść tweeta:</p>";
+    echo "<p class='tweet data'>" . $tweet->getCreationDate() . "</p>";
+    echo "<p class='tweet autor'>Autor: " . User::getUser($conn, $tweet->getUserId())->getEmail() . "</p>";
     echo "<p class='tweet text'>" . $tweet->getText() . "</p>";
     ?>
 </div>
-<div>
-    <h3>Tu są komentarze do tego tweeta</h3>
+    <h3>Komentarze:</h3>
+<div class='box comment_box'>
+
     <?php
     $allComments = $tweet->getAllComments($conn);
     if ($allComments) {
         foreach ($allComments as $comment) {
-            echo "<div class='box'><p class='comment'>Komentarz dodał: " . User::getUser($conn, $comment->getUserId())->getEmail() . "</p>";
-            echo "<p class='comment'>Id komentarza: " . $comment->getId() . "</p>";
-            echo "<p class='comment'>Data utworzenia: " . $comment->getCreationDate() . "</p>";
-            echo "<p class='comment'>Treść komentarza:</p>";
-            echo "<p class='comment text'>" . $comment->getText() . "</p></div>";
+            echo "<p class='comment data'>" . $comment->getCreationDate() . "</p>";
+            echo "<p class='comment autor'>Autor: " . User::getUser($conn, $comment->getUserId())->getEmail() . "</p>";
+            echo "<p class='comment text'>" . $comment->getText() . "</p><hr class='tweet_end'>";
         }
     } else {
-        echo "<div class='box'><p class='comment'>Ten tweet nie ma jeszcze komentarzy</p></div>";
+        echo "<p class='comment'>Ten tweet nie ma jeszcze komentarzy</p>";
     }
     ?>
 </div>

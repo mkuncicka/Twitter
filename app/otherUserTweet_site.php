@@ -24,6 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['new_comment'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
     redirect('users_list.php');
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['main_site'])) {
+    redirect('../index.php');
+}
 ?>
 
 <html>
@@ -41,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['usersList'])) {
             <ul>
                 <li><button type="submit" name="logout" class="btn">Wyloguj</button></li>
                 <li><button type="submit" name="usersList" class="btn">Lista użytkowników</button></li>
+                <li><button type="submit" name="main_site" class="btn">Strona główna</button></li>
             </ul>
         </form>
 
