@@ -41,39 +41,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['main_site'])) {
     <h3>Twoje konwersacje</h3>
     <?php
     $allMessages = $loggedUser->getAllMessages($conn);
-    $users = [];
-    foreach ($allMessages as $message) {
-        $sender = User::getUser($conn, $message->getSenderId());
-        $addresser = User::getUser($conn, $message->getAddresserId());
-        if (!in_array($sender, $users) and $sender != $loggedUser) {
-            $users[] = $sender;
+    if ($allMessages) {
+        $users = [];
+        foreach ($allMessages as $message) {
+            $sender = User::getUser($conn, $message->getSenderId());
+            $addresser = User::getUser($conn, $message->getAddresserId());
+            if (!in_array($sender, $users) and $sender != $loggedUser) {
+                $users[] = $sender;
+            }
+
+            if (!in_array($addresser, $users) and $addresser != $loggedUser) {
+                $users[] = $addresser;
+            }
         }
 
-        if (!in_array($addresser, $users) and $addresser != $loggedUser) {
-            $users[] = $addresser;
-        }
-    }
-
-    if (count($users) > 0) {
-        foreach ($users as $user) {
-            echo "<p><a href = message_site.php?user=". $user->getId() .">" . $user->getEmail() . "</a></p>";
+        if (count($users) > 0) {
+            foreach ($users as $user) {
+                echo "<p><a href = message_site.php?user=" . $user->getId() . ">" . $user->getEmail() . "</a></p>";
+            }
         }
     } else {
         echo "<p>Nie masz wiadomości</p>";
     }
-//
-//    if ($allMessages) {
-//        foreach ($allMessages as $message) {
-//            echo "<div class='box'><p class='message'>Od:" . User::getUser($conn, $message->getSenderId())->getEmail() . "</p>";
-//            echo "<p class='message'>Do:" . User::getUser($conn, $message->getAddresserId())->getEmail() . "</p>";
-//            echo "<p class='message'>Id: " . $message->getId() . "</p>";
-//            echo "<p class='message'>Data: " . $message->getCreationDate() . "</p>";
-//            echo "<p class='message'>" . $message->getIfRead() . "</p>";
-//            echo "<p class='message' class='text'>" . $message->getText() . "</p></div>";
-//        }
-//    } else {
-//        echo "Nie masz wiadomości";
-//    }
     ?>
 </div>
 <div>

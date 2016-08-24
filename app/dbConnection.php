@@ -1,9 +1,8 @@
 <?php
 function redirectIfNotLoggedIn() {
-//    if (!($_SERVER['SCRIPT_NAME'] == '/twitter/app/login.php' or $_SERVER['SCRIPT_NAME'] == '/twitter/app/registration.php'))
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: http://' . $_SERVER['SERVER_NAME'] . "/twitter/app/login.php");
-        }
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: http://' . $_SERVER['SERVER_NAME'] . "/twitter/app/login.php");
+    }
 }
 
 function redirect($location) {
